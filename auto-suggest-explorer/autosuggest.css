@@ -1,0 +1,132 @@
+#autosuggest-container {
+    padding: 0px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 85%;
+    font-size: 18px;
+    text-align: center;
+}
+
+#partial-blocks {
+
+    border: '1px solid black';
+    border-top: '0px';
+    position: 'absolute';
+    overflow: 'auto';
+    max-height: '300px';
+    background: 'white';
+}
+
+.input { height: 50px; }
+
+.form-check { float: left; }
+
+#find-user {
+    height: 50px;
+    width: 100%;
+    font-weight: bolder;
+}
+
+#lat-long-label {
+    font-weight: bolder;
+    padding: 2px;
+}
+
+#address-input {
+    width: 100%;
+    height: 50px;
+}
+
+#reverse-button {
+    height: 50px;
+}
+
+#user-loc-button {
+    width: 100%;
+    height: 50px;
+    font-weight: bolder;
+}
+
+#query-form {
+    width : 100%;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+#query-search {
+    height: 50px;
+    padding: 0px;
+}
+
+#card-container {
+    width: 100%;
+    padding: 10px 20px;
+    padding-left: 0px;
+    height: 100%;
+    min-height: 400px;
+}
+
+#partial-blocks > div:hover {
+    border: 1px solid 'black';
+}
+
+#partial-blocks > div {
+    border: 1px solid 'white';
+}
+
+
+
+
+#map-view {
+    width : 100%;
+    height : auto;
+    padding: 0px;
+}
+
+.card {
+    margin-bottom: 5pt;
+    width: 100%;
+
+}
+
+.card-header {
+    width : 100%;
+    padding : 0;
+    height: 25pt;
+    background-color : white;
+    border-color : white;
+}
+
+span.type-index {
+    font-size: 14pt;
+    line-height: 8pt;
+    max-height: 18pt;
+    height: auto;
+    width: auto;
+}
+
+div.type-badge {
+    font-size: 14pt;
+    width: 100%;
+    height: auto;
+}
+
+div.type-label {
+    font-weight: bolder;
+    font-size : 12;
+}
+
+div.card-body {
+    font-size : 18px;
+    font-weight: 500;
+    padding : 5pt;
+    align-self: center;
+}
+
+main {
+    padding: 50pt 100pt;
+}

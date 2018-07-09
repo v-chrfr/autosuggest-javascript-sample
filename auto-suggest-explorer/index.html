@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Bing Maps Autosuggest Example">
+  <meta name="author" content="Chris French">
+  <!--
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline' https://*.bing.com https://*.virtualearth.net; style-src 'self' 'unsafe-inline' https://*.bing.com https://*.virtualearth.net; media-src *">
+  -->
+  <title>Bing Maps Autosuggest Example</title>
+  <script>
+    var Microsoft;
+    function RenderMap()
+    {
+      console.log("RenderMap Called");
+
+      // Replace this JS code with your own models
+      let api_key = sessionStorage.getItem('store-api-input');
+      let focus_data = sessionStorage.getItem('focus');
+      let user_data = sessionStorage.getItem('user');
+      let entities = JSON.parse(sessionStorage.getItem('entity-list'));
+      let focus_id = null;
+
+      // Create Map
+      if (user_data != null && api_key != "" && typeof Microsoft != 'undefined')
+      {
+        let user = JSON.parse(user_data);
+        let center = new Microsoft.Maps.Location(user.latitude, user.longitude);
+        let map = Microsoft.Maps.Map('#map-view', {
+          credentials: api_key,
+          center: center,
+          mapTypeId: Microsoft.Maps.MapTypeId.Roads,
+          zoom: 10
+        });
+
+        // create user pin
+        var user_pin = new Microsoft.Maps.Pushpin(center, {
+          title: user.title,
+          color: user.color
+        });
+
+        map.entities.push(user_pin);
+        var locs = [center];
+
+        if (focus_data != 'null' && focus_data != null)
+        {
+          let focus = JSON.parse(focus_data);
+          let focus_loc = new Microsoft.Maps.Location(focus.latitude, focus.longitude);
+          let focus_pin = new Microsoft.Maps.Pushpin(focus_loc, { title: focus.title, text: focus.index, color: focus.color });
+          map.entities.push(focus_pin);
+          focus_id = focus.index;
+        }
+
+        if (entities != null && entities != 'null')
+        {
+          for (let i = 0; i < entities.length; i++)
+          {
+            let entity = entities[i];
+            if (entity.index === focus_id) 
+            {
+              continue;
+            }
+            else 
+            {
+              let loc = new Microsoft.Maps.Location(entity.latitude, entity.longitude);
+              locs.push(loc);
+              map.entities.push(
+                new Microsoft.Maps.Pushpin(
+                  loc,
+                  { title: entity.label, text: entity.index, color: "rgb(91,192,222)" }));
+            }
+          }
+        }
+
+        map.setView({
+          bounds: Microsoft.Maps.LocationRect.fromLocations(locs),
+          padding: 100
+        });
+      }
+      else
+      {
+        if (Microsoft != undefined && api_key != null)
+        {
+          let map = Microsoft.Maps.Map('#map-view', {
+            credentials: api_key,
+            center: new Microsoft.Maps.Location(47.647721, -122.129971),
+            mapTypeId: Microsoft.Maps.MapTypeId.Roads,
+            zoom: 10
+          });
+        }
+      }
+    }
+
+  </script>
+  <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=RenderMap' async defer></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="autosuggest.css">
+</head>
+
+<body>
+  <main role="main" class="container">
+    <!-- Form for getting API KEY-->
+    <div class="col-12" style="width:100%; padding:0;">
+      <div class="row">
+        <div class="col-10">
+          <input type="input" class="form-control" id="api-input">
+        </div>
+        <div class="col-2 float-right">
+          <button id="api-button" class="btn btn-primary">Bing Maps API Key</button>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div id="get-user">
+      <div class="row">
+        <div class="col-2">
+          <h4>User Location</h4>
+        </div>
+        <div class="col-8">
+          <form class="form-inline">
+            <input type="input" class="form-control col-8" id="address-input">
+            <button id="reverse-button" class="btn btn-primary col-4">Reverse Geocode Address</button>
+          </form>
+        </div>
+        <div class="col-2">
+          <button id="user-loc-button" class="btn btn-danger float-right">Use IP Address</button>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-6">
+          <div class="form-inline">
+            <label class="col-4" id="lat-long-label" for="address-geocode">User Lat/Long: </label>
+            <input type="input" readonly class="form-control col-8" id="address-geocode">
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="form-inline">
+            <label for="radius-input"> Radius (KM):&ThinSpace;</label>
+            <select type="input" class="form-control" id="radius-input"></select>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="entitybox1" value="Business">
+            <label class="form-check-label" for="entitybox1">Businesses</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="entitybox2" value="Address">
+            <label class="form-check-label" for="entitybox2">Adddresses</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="entitybox3" value="Place">
+            <label class="form-check-label" for="entitybox3">Places</label>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div id="autosuggest-container">
+        <div class="row col-12">
+          <div id="query-form" class="col-6">
+            <div>Current Autosuggest Query:
+              <span id="query-text"></span>
+            </div>
+            <div id="card-container" class="col pre-scrollable"></div>
+          </div>
+          <div id="map-view" class="col-6"></div>
+        </div>
+        <div id="save-data-link" class="float-right" style="margin-right: 30px;"></div>
+        <div id="query-search" class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="SearchPrepend">Query</span>
+          </div>
+          <input autocomplete="off" id="partial-query" class="form-control" aria-describedby="SearchPrepend">
+          <div id="partial-blocks"></div>
+        </div>
+      </div>
+      <div class="col-12 footer">
+        <span>Bing Maps REST Autosuggest API Code Sample -
+          <a href="https://www.bingmapsportal.com/">Create a BING Maps API Key Today!</a>
+        </span>
+      </div>
+  </main>
+  <script src="autosuggest.js"></script>
+</body>
+
+</html>

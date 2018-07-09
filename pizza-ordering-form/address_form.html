@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Bing Maps Autosuggest API -- Address Example">
+    <meta name="author" content="Chris French">
+
+    <title>Pizza Order Form</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="address_form.css">
+</head>
+
+<body>
+    <main role="main" class="container">
+        <div class="col-12">
+            <div id="header" class="row">
+                <div class="col">
+                    <headfont>Order
+                        <br />Pizza!
+                        <headfont>
+                </div>
+                <div class="col pizza_image ml-auto"></div>
+            </div>
+        </div>
+
+        <div id="form_view" class="col-12">
+            <form>
+                <div class="input-group search-bar">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Search For Your Address: </span>
+                    </div>
+                    <input class="form-control" id="search-form">
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Address 2</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">State</label>
+                        <input id="inputState" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger">Continue to checkout</button>
+            </form>
+        </div>
+        <div class="col-12">
+            <span class="float-right">Bing Maps REST Autosuggest API Code Sample -
+                <a href="https://www.bingmapsportal.com/">Create a BING Maps API Key Today!</a>
+            </span>
+        </div>
+    </main>
+    <script src=https://code.jquery.com/jquery-3.3.1.min.js></script>
+    <script src=https://code.jquery.com/ui/1.12.1/jquery-ui.min.js></script>
+    <script src="address_form.js"></script>
+</body>
+
+</html>
