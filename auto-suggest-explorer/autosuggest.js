@@ -452,7 +452,7 @@
 		
 
 		// UI interactions
-		rad_input = document.getElementById('radius-input');
+		let rad_input = document.getElementById('radius-input');
 		document.getElementById('user-loc-button').addEventListener('mousedown', () => { SetUserLocationByIP(); });
 		document.getElementById('reverse-button').addEventListener('mousedown', () => { ReverseUserAddress(); });
 
