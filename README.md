@@ -1,6 +1,6 @@
 # Bing Maps Autosuggest API Samples
 
-This repo contains several Javascript samples utilizing the new [Bing Maps REST API](https://msdn.microsoft.com/en-us/library/ff701713.aspx) Autosuggest API.
+This repo contains several Javascript samples utilizing the new [Bing Maps REST API](https://msdn.microsoft.com/en-us/library/ff701713.aspx) service: Autosuggest API.
 
 ## Autosuggest Address for Online Ordering Form
 
