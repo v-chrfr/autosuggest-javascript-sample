@@ -1,5 +1,6 @@
 #autosuggest-container {
     padding: 0px;
+    min-height: 800px;
 }
 
 .footer {
@@ -9,6 +10,7 @@
     width: 85%;
     font-size: 18px;
     text-align: center;
+    background: white;
 }
 
 #partial-blocks {
@@ -74,12 +76,17 @@
     border: 1px solid 'black';
 }
 
+#partial-query, #SearchPrepend {
+    height: 50px;
+}
+
 #partial-blocks > div {
     border: 1px solid 'white';
 }
 
-
-
+#partial-blocks {
+    min-height: 200px;
+}
 
 #map-view {
     width : 100%;
@@ -90,6 +97,8 @@
 .card {
     margin-bottom: 5pt;
     width: 100%;
+    display: block;
+    height: auto;
 
 }
 
@@ -101,10 +110,8 @@
     border-color : white;
 }
 
-span.type-index {
+div.type-index {
     font-size: 14pt;
-    line-height: 8pt;
-    max-height: 18pt;
     height: auto;
     width: auto;
 }
@@ -112,19 +119,21 @@ span.type-index {
 div.type-badge {
     font-size: 14pt;
     width: 100%;
-    height: auto;
+    height: 25px;
 }
 
 div.type-label {
     font-weight: bolder;
-    font-size : 12;
+    font-size : 16;
+    height: 25px;
 }
 
 div.card-body {
     font-size : 18px;
     font-weight: 500;
-    padding : 5pt;
+    padding : 4pt;
     align-self: center;
+    height: 50px;
 }
 
 main {

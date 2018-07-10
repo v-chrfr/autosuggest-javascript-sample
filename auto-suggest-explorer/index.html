@@ -27,6 +27,7 @@
       if (user_data != null && api_key != "" && typeof Microsoft != 'undefined')
       {
         let user = JSON.parse(user_data);
+        let focus = JSON.parse(focus_data);
         let center = new Microsoft.Maps.Location(user.latitude, user.longitude);
         let map = Microsoft.Maps.Map('#map-view', {
           credentials: api_key,
@@ -44,9 +45,8 @@
         map.entities.push(user_pin);
         var locs = [center];
 
-        if (focus_data != 'null' && focus_data != null)
+        if (focus != 'null' && focus != null)
         {
-          let focus = JSON.parse(focus_data);
           let focus_loc = new Microsoft.Maps.Location(focus.latitude, focus.longitude);
           let focus_pin = new Microsoft.Maps.Pushpin(focus_loc, { title: focus.title, text: focus.index, color: focus.color });
           map.entities.push(focus_pin);
@@ -73,11 +73,16 @@
             }
           }
         }
-
-        map.setView({
-          bounds: Microsoft.Maps.LocationRect.fromLocations(locs),
-          padding: 100
-        });
+        if (focus != null) 
+        {
+          let focus_loc = new Microsoft.Maps.Location(focus.latitude, focus.longitude);
+          map.setView({ center: focus_loc, zoom: 10 });
+        }
+        else 
+        {
+          map.setView({ bounds: Microsoft.Maps.LocationRect.fromLocations(locs), padding: 80 });
+        }
+        
       }
       else
       {
@@ -106,11 +111,11 @@
     <!-- Form for getting API KEY-->
     <div class="col-12" style="width:100%; padding:0;">
       <div class="row">
-        <div class="col-10">
+        <div class="col-9">
           <input type="input" class="form-control" id="api-input">
         </div>
-        <div class="col-2 float-right">
-          <button id="api-button" class="btn btn-primary">Bing Maps API Key</button>
+        <div class="col-3 float-right">
+          <button id="api-button" class="btn btn-primary" style="width: 100%";>Validate Bing Maps API Key</button>
         </div>
       </div>
     </div>
@@ -141,7 +146,7 @@
         <div class="col-2">
           <div class="form-inline">
             <label for="radius-input"> Radius (KM):&ThinSpace;</label>
-            <select type="input" class="form-control" id="radius-input"></select>
+            <select class="form-control" id="radius-input"></select>
           </div>
         </div>
         <div class="col-4">

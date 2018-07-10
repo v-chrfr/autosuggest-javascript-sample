@@ -4,6 +4,7 @@
 
 (function ()
 {
+    var secret_api_key = "***ENTER_YOUR_API_KEY_HERE***";
 
     // Use HTML5 Geolocation to get User Location -- available in Modern Browsers
     function getLocation()
@@ -132,8 +133,6 @@
 
     $(document).ready(function ()
     {
-        let secret_api_key = "***************ENTER YOUR API KEY HERE***************";
-
         getLocation();
 
         // Use JQuery Autosuggest UI and call Bing Maps REST Autosuggest API

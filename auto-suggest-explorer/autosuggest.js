@@ -97,8 +97,9 @@
 	function GetUserLocation()
 	{
 		let loc = document.getElementById('address-geocode').value;
-		let rad = document.getElementById('radius-input').value;
-		return loc + "," + rad;
+		let rad = document.getElementById('radius-input');
+		let radius = rad.options[rad.selectedIndex].text;
+		return loc + "," + radius;
 	}
 
 	// Use HTML5 Geolocation to get User Location -- available in Modern Browsers
@@ -339,7 +340,7 @@
 	function CreateCardHeaderTitle(entity)
 	{
 		let header = document.createElement('div');
-		header.className = 'col-7 type-label btn btn-light';
+		header.className = 'col-8 type-label btn btn-light';
 		header.addEventListener('mousedown', () => { SetFocus(entity, 'focus'); });
 		header.addEventListener('mouseup', () => { location.reload(true); });
 		header.innerHTML = entity.label;
@@ -351,9 +352,12 @@
 		let children = document.createElement('div');
 		children.className = 'card-header row';
 		children.style.width = '100%';
+		children.style.display = 'block';
+		entity_badge.style.display = 'inline-block';
 		children_container = document.createDocumentFragment();
 		children_container.appendChild(CreateCardHeaderTitle(entity));
 		children_container.appendChild(type_badge).appendChild(entity_badge);
+		//children_container.appendChild(entity_badge);
 		children.appendChild(children_container);
 		return children;
 	}
@@ -369,12 +373,22 @@
 	function CreateCard(entity)
 	{
 		var entity_badge = CreateHTML(entity.index, 'span', 'float-right btn type-index badge-info');
-		var type_badge = CreateHTML(entity.entity_type, 'div', 'col-5 float-right type-badge badge-secondary');
+		var type_badge = CreateHTML(entity.entity_type, 'div', 'col-4  type-badge badge-secondary');
 		var card = document.createElement('div');
 		card.className = 'card';
 		card.appendChild(CreateCardHeader(entity, type_badge, entity_badge));
 		card.appendChild(CreateCardContent(entity));
 		document.getElementById('card-container').appendChild(card);
+	}
+
+	let CreateOptions = function() {
+		let option_container = document.createDocumentFragment();
+		for (let i = 0, option = document.createElement('option'); i <= 2; i += 0.5)
+		{
+			option.innerHTML = String(i);
+			option_container.appendChild(option);
+		}
+		return option_container;
 	}
 
 	function LoadPage()
@@ -383,18 +397,11 @@
 
 		let api_key = loadApiKey();
 
-		for (let i = 0, option = document.createElement('option'); i <= 2; i += 0.5)
-		{
-			option.innerHTML = String(i);
-			document.getElementById('radius-input').appendChild(option);
-		}
-
 		// session storage ids
 		var storage_pairs = [
 			["address-geocode", 'store-address-geocode'],
 			["api-input", 'store-api-input'],
 			["address-input", 'store-address-input'],
-			["radius-input", 'store-radius-input'],
 			["partial-query", 'store-partial-query']
 		];
 
@@ -417,6 +424,10 @@
 		let old_query = sessionStorage.getItem('store-partial-query') || '(none)';
 		document.getElementById('query-text').innerHTML = old_query;
 
+		let options = CreateOptions();
+		document.getElementById('radius-input').appendChild(options);
+		document.getElementById('radius-input').selectedIndex = JSON.parse(sessionStorage.getItem('store-radius-input')) || 0;
+
 		//load checkbox values
 		storage_checkbox_pairs.forEach(function (pair)
 		{
@@ -424,21 +435,20 @@
 			document.getElementById(pair[0]).checked = (val == 'true') ? true : false;
 		});
 
-		let radius = document.getElementById('radius-input').value;
-		sessionStorage.setItem("store-radius-input", radius);
-
 		let response_url = sessionStorage.getItem('response-url');
 		if (response_url != null)
 		{
 			SaveJsonResponseAsLink(response_url);
 		}
 
+		
+
 		// UI interactions
 		document.getElementById('user-loc-button').addEventListener('mousedown', () => { SetUserLocationByIP(); });
 		document.getElementById('reverse-button').addEventListener('mousedown', () => { ReverseUserAddress(); });
 		document.getElementById('api-button').onclick = () => { sessionStorage.setItem("store-api-input", loadApiKey()); };
 		document.getElementById('address-geocode').addEventListener('change', () => location.reload(true));
-		document.getElementById('radius-input').addEventListener('change', () => { sessionStorage.setItem("store-radius-input", this.value); });
+		document.getElementById('radius-input').addEventListener('change', () => { sessionStorage.setItem("store-radius-input", this.selectedIndex); });
 	}
 
 	let BuildBlock = function (entity)
