@@ -6,8 +6,8 @@
 {
 	const query_bar = document.getElementById('partial-query');
 	const blocks = document.getElementById('partial-blocks');
-	const USER_FOCUS = { title: "User", color: 'red', latitude: null, longitude: null };
-	const ENTITY_FOCUS = { title: "Selected", color: 'green', latitude: null, longitude: null };
+	const USER_FOCUS = { title: 'User', color: 'red', latitude: null, longitude: null };
+	const ENTITY_FOCUS = { title: null, subTitle: "(selected)", color: 'green', latitude: null, longitude: null };
 
 	/* Entity prototype for Autosuggest Results */
 	function Entity(data)
@@ -48,7 +48,8 @@
 		let focus = (type == 'user') ? USER_FOCUS : ENTITY_FOCUS;
 		focus.latitude = entity.latitude;
 		focus.longitude = entity.longitude;
-		focus.text = entity.index;
+		focus.index = String(entity.index);
+		focus.title = focus.title || entity.label;
 		return focus;
 	}
 

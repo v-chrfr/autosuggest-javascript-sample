@@ -48,7 +48,8 @@
         if (focus != 'null' && focus != null)
         {
           let focus_loc = new Microsoft.Maps.Location(focus.latitude, focus.longitude);
-          let focus_pin = new Microsoft.Maps.Pushpin(focus_loc, { title: focus.title, text: focus.index, color: focus.color });
+          let focus_pin = new Microsoft.Maps.Pushpin(focus_loc,
+            { title: focus.title, subTitle: focus.subTitle, text: focus.index, color: focus.color });
           map.entities.push(focus_pin);
           focus_id = focus.index;
         }
@@ -58,18 +59,19 @@
           for (let i = 0; i < entities.length; i++)
           {
             let entity = entities[i];
-            if (entity.index === focus_id) 
+            if (entity.index == focus_id) 
             {
               continue;
             }
             else 
             {
+              console.log('new entity ' + JSON.stringify(entity));
               let loc = new Microsoft.Maps.Location(entity.latitude, entity.longitude);
               locs.push(loc);
               map.entities.push(
                 new Microsoft.Maps.Pushpin(
                   loc,
-                  { title: entity.label, text: entity.index, color: "rgb(91,192,222)" }));
+                  { title: entity.label, text: String(entity.index), color: "rgb(91,192,222)" }));
             }
           }
         }
@@ -82,7 +84,7 @@
         {
           map.setView({ bounds: Microsoft.Maps.LocationRect.fromLocations(locs), padding: 80 });
         }
-        
+
       }
       else
       {
@@ -115,7 +117,7 @@
           <input type="input" class="form-control" id="api-input">
         </div>
         <div class="col-3 float-right">
-          <button id="api-button" class="btn btn-primary" style="width: 100%";>Validate Bing Maps API Key</button>
+          <button id="api-button" class="btn btn-primary" style="width: 100%" ;>Validate Bing Maps API Key</button>
         </div>
       </div>
     </div>
@@ -138,12 +140,12 @@
       <hr />
       <div class="row">
         <div class="col-6 form-inline">
-            <label class="col-4" id="lat-long-label" for="address-geocode">User Lat/Long: </label>
-            <input type="input" readonly class="form-control col-8" id="address-geocode">
+          <label class="col-4" id="lat-long-label" for="address-geocode">User Lat/Long: </label>
+          <input type="input" readonly class="form-control col-8" id="address-geocode">
         </div>
         <div class="col form-inline float-right">
-            <label for="radius-input"> Radius (KM):&ThinSpace;</label>
-            <select class="form-control" id="radius-input"></select>
+          <label for="radius-input"> Radius (KM):&ThinSpace;</label>
+          <select class="form-control" id="radius-input"></select>
         </div>
         <div class="col form-inline float-right">
           <div class="form-check form-check-inline">
