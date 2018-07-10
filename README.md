@@ -26,8 +26,7 @@ To use these samples, simply clone this repo:
 git clone https://github.com/v-chrfr/autosuggest-javascript-sample.git
 ```
 
-> [!IMPORTANT]
-> For the [pizza ordering form sample](pizza-ordering-form), enter your Bing Maps API Key in [address_form.js](pizza-ordering-form/address_form.js).
+> **IMPORTANT** For the [pizza ordering form sample](pizza-ordering-form), enter your Bing Maps API Key in [address_form.js](pizza-ordering-form/address_form.js).
 
 Then view the `html` file in either folder with your favorite javascript-enabled browser.
 
