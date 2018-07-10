@@ -448,13 +448,14 @@
 		
 
 		// UI interactions
+		rad_input = document.getElementById('radius-input');
 		document.getElementById('user-loc-button').addEventListener('mousedown', () => { SetUserLocationByIP(); });
 		document.getElementById('reverse-button').addEventListener('mousedown', () => { ReverseUserAddress(); });
 
 		document.getElementById('api-button').addEventListener('mousedown', () => { sessionStorage.setItem("store-api-input", loadApiKey()); });
 		document.getElementById('api-button').addEventListener('mouseup', () => location.reload(true));
 		document.getElementById('address-geocode').addEventListener('text', () => location.reload(true));
-		document.getElementById('radius-input').addEventListener('input', () => { sessionStorage.setItem("store-radius-input", this.selectedIndex); });
+		rad_input.addEventListener('change', (e) => { sessionStorage.setItem("store-radius-input", rad_input.selectedIndex); });
 	}
 
 	let BuildBlock = function (entity)
@@ -509,7 +510,7 @@
 				{
 					blocks.innerHTML = '';
 					let old_query = sessionStorage.getItem('store-partial-query');
-					if (query != '')
+					if (query != '' && query != old_query)
 					{
 						console.log('Calling Autosuggest');
 						ListStoreReset('entity-list');
