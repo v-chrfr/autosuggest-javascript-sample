@@ -383,8 +383,9 @@
 
 	let CreateOptions = function() {
 		let option_container = document.createDocumentFragment();
-		for (let i = 0, option = document.createElement('option'); i <= 2; i += 0.5)
+		for (let i = 0; i <= 2; i += 0.5)
 		{
+			let option = document.createElement('option');
 			option.innerHTML = String(i);
 			option_container.appendChild(option);
 		}
@@ -425,9 +426,11 @@
 		document.getElementById('query-text').innerHTML = old_query;
 
 		let options = CreateOptions();
-		document.getElementById('radius-input').appendChild(options);
-		document.getElementById('radius-input').selectedIndex = JSON.parse(sessionStorage.getItem('store-radius-input')) || 0;
+		Promise.resolve(options)
+			.then(o => document.getElementById('radius-input').appendChild(o))
+			.then(() => document.getElementById('radius-input').selectedIndex = sessionStorage.getItem('store-radius-input') || 0);
 
+		
 		//load checkbox values
 		storage_checkbox_pairs.forEach(function (pair)
 		{
@@ -446,9 +449,11 @@
 		// UI interactions
 		document.getElementById('user-loc-button').addEventListener('mousedown', () => { SetUserLocationByIP(); });
 		document.getElementById('reverse-button').addEventListener('mousedown', () => { ReverseUserAddress(); });
-		document.getElementById('api-button').onclick = () => { sessionStorage.setItem("store-api-input", loadApiKey()); };
-		document.getElementById('address-geocode').addEventListener('change', () => location.reload(true));
-		document.getElementById('radius-input').addEventListener('change', () => { sessionStorage.setItem("store-radius-input", this.selectedIndex); });
+
+		document.getElementById('api-button').addEventListener('mousedown', () => { sessionStorage.setItem("store-api-input", loadApiKey()); });
+		document.getElementById('api-button').addEventListener('mouseup', () => location.reload(true));
+		document.getElementById('address-geocode').addEventListener('text', () => location.reload(true));
+		document.getElementById('radius-input').addEventListener('input', () => { sessionStorage.setItem("store-radius-input", this.selectedIndex); });
 	}
 
 	let BuildBlock = function (entity)
@@ -497,7 +502,6 @@
 		let onChange = function ()
 		{
 			let query = query_bar.value;
-			ListStoreReset('entity-list');
 			Promise.resolve(query)
 				.then(ClearBlocks)
 				.then(function (query)
@@ -506,8 +510,9 @@
 					let old_query = sessionStorage.getItem('store-partial-query');
 					if (query != '' && old_query != query)
 					{
-						sessionStorage.setItem('store-partial-query', query);
 						console.log('Calling Autosuggest');
+						ListStoreReset('entity-list');
+						sessionStorage.setItem('store-partial-query', query);
 						let api_key = loadApiKey();
 						CallAutosuggestService(query, api_key);
 					}
