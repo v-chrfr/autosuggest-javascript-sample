@@ -340,26 +340,25 @@
 	function CreateCardHeaderTitle(entity)
 	{
 		let header = document.createElement('div');
-		header.className = 'col-8 type-label btn btn-light';
+		header.className = 'type-label btn btn-light';
 		header.addEventListener('mousedown', () => { SetFocus(entity, 'focus'); });
 		header.addEventListener('mouseup', () => { location.reload(true); });
 		header.innerHTML = entity.label;
 		return header;
 	}
 
-	function CreateCardHeader(entity, type_badge, entity_badge)
+	function CreateCardHeader(entity, type_badge, index_badge)
 	{
-		let children = document.createElement('div');
-		children.className = 'card-header row';
-		children.style.width = '100%';
-		children.style.display = 'block';
-		entity_badge.style.display = 'inline-block';
+		let div = document.createElement('div');
+		div.className = 'card-header';
+		div.style.width = '100%';
 		children_container = document.createDocumentFragment();
 		children_container.appendChild(CreateCardHeaderTitle(entity));
-		children_container.appendChild(type_badge).appendChild(entity_badge);
+		type_badge.appendChild(index_badge);
+		children_container.appendChild(type_badge);
 		//children_container.appendChild(entity_badge);
-		children.appendChild(children_container);
-		return children;
+		div.appendChild(children_container);
+		return div;
 	}
 
 	function CreateCardContent(entity)
@@ -372,11 +371,12 @@
 
 	function CreateCard(entity)
 	{
-		var entity_badge = CreateHTML(entity.index, 'span', 'float-right btn type-index badge-info');
-		var type_badge = CreateHTML(entity.entity_type, 'div', 'col-4  type-badge badge-secondary');
+		var index_badge = CreateHTML(entity.index, 'span', 'btn type-index badge-info');
+		var type_badge = CreateHTML(entity.entity_type, 'span', 'float-right type-badge badge-secondary');
+		type_badge.style.display = 'flex';
 		var card = document.createElement('div');
 		card.className = 'card';
-		card.appendChild(CreateCardHeader(entity, type_badge, entity_badge));
+		card.appendChild(CreateCardHeader(entity, type_badge, index_badge));
 		card.appendChild(CreateCardContent(entity));
 		document.getElementById('card-container').appendChild(card);
 	}
@@ -508,7 +508,7 @@
 				{
 					blocks.innerHTML = '';
 					let old_query = sessionStorage.getItem('store-partial-query');
-					if (query != '' && old_query != query)
+					if (query != '')
 					{
 						console.log('Calling Autosuggest');
 						ListStoreReset('entity-list');

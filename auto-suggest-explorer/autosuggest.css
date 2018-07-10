@@ -97,43 +97,49 @@
 .card {
     margin-bottom: 5pt;
     width: 100%;
-    display: block;
-    height: auto;
+    display: flex;
+    height: 70px;
 
 }
 
 .card-header {
     width : 100%;
-    padding : 0;
-    height: 25pt;
+    height: 30pt;
+    padding: 0;
+    display: flex;
     background-color : white;
     border-color : white;
 }
 
-div.type-index {
+span.type-index {
     font-size: 14pt;
-    height: auto;
+    height: 100%;
     width: auto;
+    padding: 0px;
+    margin-left: 5px;
 }
 
-div.type-badge {
+span.type-badge {
     font-size: 14pt;
-    width: 100%;
-    height: 25px;
+    width: auto;
+    height: 30px;
 }
 
 div.type-label {
     font-weight: bolder;
-    font-size : 16;
-    height: 25px;
+    font-size : 20px;
+    line-height: 16px;
+    height: 30px;
+    width: 100%;
 }
 
 div.card-body {
-    font-size : 18px;
+    font-size : 16px;
     font-weight: 500;
-    padding : 4pt;
     align-self: center;
-    height: 50px;
+    font-style: italic;
+    height: 40px;
+    padding: 5px;
 }
 
 main {
