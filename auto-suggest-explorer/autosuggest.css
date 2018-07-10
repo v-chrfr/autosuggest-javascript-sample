@@ -96,9 +96,10 @@
 
 .card {
     margin-bottom: 5pt;
-    width: 100%;
+    width: auto;
+    overflow: hidden;
     display: flex;
-    height: 70px;
+    height: auto;
 
 }
 
@@ -123,6 +124,7 @@ span.type-badge {
     font-size: 14pt;
     width: auto;
     height: 30px;
+    flex-shrink: inherit;
 }
 
 div.type-label {
@@ -131,6 +133,8 @@ div.type-label {
     line-height: 16px;
     height: 30px;
     width: 100%;
+    overflow: hidden;
+    flex-shrink: inherit;
 }
 
 div.card-body {
@@ -140,6 +144,7 @@ div.card-body {
     font-style: italic;
     height: 40px;
     padding: 5px;
+    overflow: auto;
 }
 
 main {

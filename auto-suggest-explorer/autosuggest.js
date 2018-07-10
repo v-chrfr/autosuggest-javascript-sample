@@ -318,6 +318,10 @@
 				sessionStorage.setItem('store-' + entity_box_name, true);
 				ret.push(val);
 			}
+			else
+			{
+				sessionStorage.setItem('store-' + entity_box_name, false);
+			}
 		}
 		return (ret == []) ? "Business" : ret.join(',');
 	}
