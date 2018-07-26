@@ -3,7 +3,6 @@ main {
 }
 
 .pizza_image { 
-    background: url("https://cdn.pixabay.com/photo/2015/02/01/05/20/supreme-pizza-619133_1280.png") no-repeat;
     height: 200px;
     width: auto;
     background-size: 100%;
