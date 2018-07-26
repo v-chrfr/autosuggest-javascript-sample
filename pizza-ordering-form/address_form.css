@@ -16,11 +16,14 @@ main {
     border-width: 5px;
     border-color: black;
     padding: 0px;
+    text-align: center;
+    height: 180px;
 }
 
 headfont { 
     font-size: 120px;
-    line-height: 85px;
+    line-height: 180px;
+    
 }
 
 #form_view {
